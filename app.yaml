@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: web-app
+  name: k8s-kubernetes-christinedudas
 spec:
   replicas: 2
   selector:
@@ -24,22 +24,6 @@ spec:
       - name: web-content
         configMap:
           name: web-config
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: web-config
-data:
-  index.html: |
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title>Welcome to my Kubernetes application!</title>
-    </head>
-    <body>
-        <h1>Hello, my name is Christine Dudas!</h1>
-    </body>
-    </html>
 ---
 apiVersion: v1
 kind: Service
