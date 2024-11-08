@@ -26,6 +26,19 @@ spec:
           name: web-config
 ---
 apiVersion: v1
+kind: Service
+metadata:
+  name: my-nginx-svc
+spec:
+  selector:
+    app: web
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: NodePort
+---
+apiVersion: v1
 kind: ConfigMap
 metadata:
   name: web-config
@@ -40,16 +53,3 @@ data:
         <h1>Hello, my name is Christine Joyce Dudas!</h1>
     </body>
     </html>
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: my-nginx-svc
-spec:
-  selector:
-    app: web
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80
-  type: NodePort
