@@ -1,49 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8s-kubernetes-christinedudas
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+      - name: web-container
+        image: nginx:latest
+        volumeMounts:
+        - name: web-content
+          mountPath: /usr/share/nginx/html
+        ports:
+        - containerPort: 80
+      volumes:
+      - name: web-content
+        configMap:
+          name: web-config
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: web-config
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Welcome to my Kubernetes application!</title>
+    </head>
+    <body>
+        <h1>Hello, my name is Christine Joyce Dudas!</h1>
+    </body>
+    </html>
+---
 apiVersion: v1
 kind: Service
 metadata:
   name: my-nginx-svc
-  labels:
-    app: nginx
 spec:
-  type: LoadBalancer
-  ports:
-  - port: 80
-  targetPort: 80
-selector:
-  app: nginx
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: k8s-kubernetes-cjdudas
-  labels:
-    app: nginx
-spec:
-  replicas: 3
   selector:
-    matchLabels:
-      app: nginx
-  template:
-    metadata:
-      labels:
-        app: nginx
-    spec:
-      initContainers:
-      - name: init-html
-        image: curlimages/curl
-        command: ["sh", "-c", "curl -o / usr/share/nginx/html/index.html https://raw.githubusercontent.com/Cjdudz/my-web-app/main/index.html"]
-        volumeMounts:
-        - name: html-volume
-        mountPath: /usr/share/nginx/html
-      containers:
-      - name: nginx
-        image: nginx;1.14.2
-        ports:
-        - containerPort: 80
-        volumeMounts:
-        - name: html-volume
-        mountPath: /usr/share/share/nginx/html
-      volumes:
-      - name: html-volume
-      emptyDir: {}
-  
+    app: web
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: NodePort
