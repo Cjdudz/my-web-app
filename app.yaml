@@ -15,21 +15,21 @@ selector:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: k8s_kubernetes-Dudas
+  name: k8s-kubernetes-Dudas
   labels:
     app: nginx
-  spec:
-    replicas: 3
-    selector:
-      matchLabels:
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
         app: nginx
-    template:
-      metadata:
-        labels:
-          app: nginx
-      spec:
-        initContainers:
-        - name: init-html
+    spec:
+      initContainers:
+      - name: init-html
         image: curlimages/curl
         command: ["sh", "-c", "curl -o / usr/share/nginx/html/index.html https://raw.githubusercontent.com/Cjdudz/my-web-app/main/index.html"]
         volumeMounts:
