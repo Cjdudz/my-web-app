@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: k8s-kubernetes-dudas
+  name: k8s-kubernetes-christinedudas
 spec:
   replicas: 2
   selector:
