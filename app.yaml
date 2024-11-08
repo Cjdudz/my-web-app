@@ -34,10 +34,10 @@ data:
     <!DOCTYPE html>
     <html>
     <head>
-        <title>My Web Application</title>
+        <title>Welcome to my Kubernetes application!</title>
     </head>
     <body>
-        <h1>Hello, my name is [Your Name]!</h1>
+        <h1>Hello, my name is Christine Dudas!</h1>
     </body>
     </html>
 ---
